@@ -52,6 +52,21 @@
     .brand { margin-bottom: 16px; }
     .brand svg { height: 52px; width: auto; display: block; }
 
+    .details {
+      background: var(--pink-soft);
+      border: 1.5px solid var(--pink);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 0 0 24px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-sub);
+    }
+    .details .row { display: flex; gap: 9px; align-items: flex-start; }
+    .details .row + .row { margin-top: 7px; }
+    .details .ic { flex: none; font-size: 15px; line-height: 1.45; }
+    .details strong { color: var(--text); font-weight: 600; }
+
     .eyebrow {
       font-family: 'Rethink Sans', sans-serif;
       font-weight: 700;
@@ -214,16 +229,21 @@
         <h1>You're invited</h1>
         <p class="subtitle">We'd love to have you. Let us know if you can make it — it only takes a few seconds.</p>
 
+        <div class="details">
+          <div class="row"><span class="ic">📍</span><span><strong>Location:</strong> Sector 56, Gurugram</span></div>
+          <div class="row"><span class="ic">🥤</span><span><strong>Please note:</strong> No alcohol will be served — it's a dry event.</span></div>
+        </div>
+
         <form id="rsvpForm" novalidate>
           <div class="field">
             <label class="field-label" for="name">Your name</label>
-            <input type="text" id="name" name="name" autocomplete="name" placeholder="e.g. Aryan Srivastava" required />
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="e.g. John Doe" required />
             <div class="error-text" data-for="name">Please enter your name.</div>
           </div>
 
           <div class="field">
             <label class="field-label" for="phone">Phone number</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="e.g. +91 98765 43210" required />
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="e.g. +91 90000 12345" required />
             <div class="error-text" data-for="phone">Please enter a valid phone number.</div>
           </div>
 
