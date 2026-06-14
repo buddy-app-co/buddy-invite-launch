@@ -66,6 +66,7 @@
     .details .row + .row { margin-top: 7px; }
     .details .ic { flex: none; font-size: 15px; line-height: 1.45; }
     .details strong { color: var(--text); font-weight: 600; }
+    .details .sub { display: block; font-size: 12px; margin-top: 4px; opacity: 0.8; }
 
     .eyebrow {
       font-family: 'Rethink Sans', sans-serif;
@@ -227,10 +228,10 @@
         </div>
         <p class="eyebrow">Buddy · Launch Event</p>
         <h1>You're invited</h1>
-        <p class="subtitle">We'd love to have you. Let us know if you can make it — it only takes a few seconds.</p>
+        <p class="subtitle">We'd love to have you. Let us know if you can make it. It only takes a few seconds.</p>
 
         <div class="details">
-          <div class="row"><span class="ic">📍</span><span><strong>Location:</strong> Sector 56, Gurugram</span></div>
+          <div class="row"><span class="ic">📍</span><span><strong>Location:</strong> Sector 56, Gurugram<span class="sub">You shall receive the complete address on WhatsApp at least 12 hours before the event</span></span></div>
           <div class="row"><span class="ic">🥤</span><span>This is a non-alcoholic event and soft drinks will be available</span></div>
         </div>
 
@@ -251,7 +252,7 @@
             <label class="field-label">Will you attend?</label>
             <div class="chips" role="radiogroup" aria-label="Will you attend?">
               <label class="chip"><input type="radio" name="attending" value="Yes" required /> Yes, I'll be there</label>
-              <label class="chip"><input type="radio" name="attending" value="No" /> Can't make it</label>
+              <label class="chip"><input type="radio" name="attending" value="Maybe" /> Maybe</label>
             </div>
             <div class="error-text" data-for="attending">Please choose an option.</div>
           </div>
@@ -357,9 +358,9 @@
         });
 
         // tailor the success copy
-        if (payload.attending === "No") {
+        if (payload.attending === "Maybe") {
           document.getElementById("successTitle").textContent = "Thanks for letting us know";
-          document.getElementById("successMsg").textContent = "Sorry you can't make it — we'll catch you next time.";
+          document.getElementById("successMsg").textContent = "Hope you can make it. We'll share the details on WhatsApp.";
         }
         document.body.classList.add("done");
       } catch (err) {
