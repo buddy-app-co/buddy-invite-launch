@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Invited — Buddy Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rethink+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink: #F6DDE1;
+      --pink-soft: #FCF1F3;
+      --yellow: #F6D307;
+      --dark: #1E1E1E;
+      --blue: #53A9FF;
+      --blue-bg: #E9F4FF;
+      --text: #1E1E1E;
+      --text-sub: #555555;
+      --error: #BC1010;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--pink);
+      color: var(--text);
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 32px 26px 28px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+    }
+
+    .brand { margin-bottom: 16px; }
+    .brand svg { height: 52px; width: auto; display: block; }
+
+    .eyebrow {
+      font-family: 'Rethink Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--text-sub);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 52px;
+      line-height: 0.96;
+      margin: 0 0 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      margin: 0 0 26px;
+      color: var(--text-sub);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .field { margin-bottom: 20px; }
+
+    label.field-label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: inherit;
+      border: 1.5px solid var(--pink);
+      border-radius: 14px;
+      background: var(--pink-soft);
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus {
+      border-color: var(--blue);
+      background: #fff;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chip {
+      flex: 1;
+      cursor: pointer;
+      user-select: none;
+      text-align: center;
+      padding: 13px 10px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1.5px solid var(--pink);
+      border-radius: 14px;
+      background: var(--pink-soft);
+      transition: all 0.15s ease;
+    }
+
+    .chip input { position: absolute; opacity: 0; pointer-events: none; }
+
+    .chip:has(input:checked) {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+      color: #0b69c7;
+    }
+
+    .chip:has(input:focus-visible) {
+      box-shadow: 0 0 0 3px rgba(83, 169, 255, 0.35);
+    }
+
+    /* honeypot — hidden from humans, catches bots */
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    button.submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 16px;
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--pink);
+      background: var(--dark);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.05s ease;
+    }
+
+    button.submit:hover { opacity: 0.92; }
+    button.submit:active { transform: translateY(1px); }
+    button.submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .error-text {
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* success state */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 18px 6px 6px;
+    }
+    .success .tick {
+      width: 64px; height: 64px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--yellow);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px;
+    }
+    .success h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+      margin: 0 0 8px;
+    }
+    .success p { color: var(--text-sub); margin: 0; font-size: 15px; }
+
+    body.done .form-wrap { display: none; }
+    body.done .success { display: block; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="form-wrap">
+        <div class="brand" aria-label="Buddy">
+          <svg viewBox="0 0 939 1080" xmlns="http://www.w3.org/2000/svg" fill="none" role="img">
+            <title>Buddy</title>
+            <path d="M668.78 215.74C604.55 215.74 538.6 240.58 472.75 289.56L453.91 303.58L413.97 283.47C403.28 278.09 346.29 251.24 274.17 251.24C185.3 251.24 108.17 291.64 56.98 365C20.33 417.52 0.63 476.81 0 536.57V1070.66C0 1075.82 4.18 1079.99 9.33 1079.99H928.93C934.09 1079.99 938.26 1075.81 938.26 1070.66V513.09C938.26 453.28 921.56 395.7 889.96 346.57C835.7 262.21 757.15 215.75 668.76 215.74H668.78ZM369.2 399.99C313.91 455.27 252.08 585.15 252.08 676.21C252.08 750.93 292.44 892.24 445.2 892.24C587.77 892.24 651.59 777.08 651.59 662.94C651.59 548.8 535.26 395.42 534.08 393.88L526 383.35L536.64 375.43C583.61 340.48 628.06 322.76 668.78 322.76C720.22 322.76 765.58 351.01 799.94 404.45C820.41 436.26 831.23 473.83 831.23 513.08V972.95H107.95V537.83C108.35 499.32 121.43 459.69 144.77 426.24C175.8 381.77 220.54 358.27 274.18 358.27C323.96 358.27 364.15 378.22 365.84 379.07L381.99 387.2L369.21 399.99H369.2ZM445.2 785.21C377.25 785.21 359.12 716.7 359.12 676.21C359.12 626.08 396.48 547.22 427.59 499.44C435.45 487.37 444.45 476.1 454.44 465.73L455.5 466.98C462.21 474.9 468.38 483.25 473.95 492.01C502.83 537.4 544.54 616.3 544.54 662.94C544.54 740.64 508.33 785.2 445.19 785.2L445.2 785.21Z" fill="#1E1E1E"/>
+            <path d="M259.71 207.48C305.04 207.48 341.92 170.6 341.92 125.27C341.92 79.94 305.04 43.0601 259.71 43.0601C214.38 43.0601 177.5 79.94 177.5 125.27C177.5 170.6 214.38 207.48 259.71 207.48Z" fill="#1E1E1E"/>
+            <path d="M686.39 164.42C731.72 164.42 768.6 127.54 768.6 82.2101C768.6 36.8801 731.72 0 686.39 0C641.06 0 604.18 36.8801 604.18 82.2101C604.18 127.54 641.06 164.42 686.39 164.42Z" fill="#1E1E1E"/>
+          </svg>
+        </div>
+        <p class="eyebrow">Buddy · Launch Event</p>
+        <h1>You're invited</h1>
+        <p class="subtitle">We'd love to have you. Let us know if you can make it — it only takes a few seconds.</p>
+
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label class="field-label" for="name">Your name</label>
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="e.g. Aryan Srivastava" required />
+            <div class="error-text" data-for="name">Please enter your name.</div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="e.g. +91 98765 43210" required />
+            <div class="error-text" data-for="phone">Please enter a valid phone number.</div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Will you attend?</label>
+            <div class="chips" role="radiogroup" aria-label="Will you attend?">
+              <label class="chip"><input type="radio" name="attending" value="Yes" required /> Yes, I'll be there</label>
+              <label class="chip"><input type="radio" name="attending" value="No" /> Can't make it</label>
+            </div>
+            <div class="error-text" data-for="attending">Please choose an option.</div>
+          </div>
+
+          <div class="field" id="mealField">
+            <label class="field-label">Meal preference</label>
+            <div class="chips" role="radiogroup" aria-label="Meal preference">
+              <label class="chip"><input type="radio" name="meal" value="Veg" /> Veg</label>
+              <label class="chip"><input type="radio" name="meal" value="Non-veg" /> Non-veg</label>
+            </div>
+            <div class="error-text" data-for="meal">Please choose a meal preference.</div>
+          </div>
+
+          <!-- honeypot: bots fill this, humans never see it -->
+          <div class="hp" aria-hidden="true">
+            <label>Leave this empty<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <button type="submit" class="submit" id="submitBtn">Send RSVP</button>
+        </form>
+      </div>
+
+      <div class="success">
+        <div class="tick">✓</div>
+        <h2 id="successTitle">See you there!</h2>
+        <p id="successMsg">Thanks for your RSVP. We've saved your response.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Paste your Apps Script Web App URL here (ends with /exec)
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbz5qaGfbHMnJ4LCfXYHqT9UQ2mirR-Nt4CiMtRjRgstuwzhLTBQd1yIm1mxONwiasM/exec";
+
+    const form = document.getElementById("rsvpForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const mealField = document.getElementById("mealField");
+
+    function showError(name, show) {
+      const el = document.querySelector('.error-text[data-for="' + name + '"]');
+      if (el) el.style.display = show ? "block" : "none";
+    }
+
+    // Meal preference only matters if attending
+    function attendingValue() {
+      const el = form.querySelector('input[name="attending"]:checked');
+      return el ? el.value : "";
+    }
+    form.addEventListener("change", function (e) {
+      if (e.target.name === "attending") {
+        const coming = attendingValue() === "Yes";
+        mealField.style.opacity = coming ? "1" : "0.45";
+        if (!coming) showError("meal", false);
+      }
+    });
+
+    function validate() {
+      let ok = true;
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const attending = attendingValue();
+      const meal = form.querySelector('input[name="meal"]:checked');
+
+      showError("name", false); showError("phone", false);
+      showError("attending", false); showError("meal", false);
+
+      if (!name) { showError("name", true); ok = false; }
+      // lenient phone check: at least 7 digits
+      if (phone.replace(/\D/g, "").length < 7) { showError("phone", true); ok = false; }
+      if (!attending) { showError("attending", true); ok = false; }
+      if (attending === "Yes" && !meal) { showError("meal", true); ok = false; }
+
+      return ok;
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+
+      // honeypot tripped -> pretend success, drop silently
+      if (form.company.value) { document.body.classList.add("done"); return; }
+
+      const payload = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        attending: attendingValue(),
+        meal: attendingValue() === "Yes"
+          ? (form.querySelector('input[name="meal"]:checked') || {}).value || ""
+          : ""
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+
+      try {
+        // text/plain keeps this a "simple request" -> no CORS preflight.
+        // Apps Script doPost reads e.postData.contents as JSON.
+        await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        });
+
+        // tailor the success copy
+        if (payload.attending === "No") {
+          document.getElementById("successTitle").textContent = "Thanks for letting us know";
+          document.getElementById("successMsg").textContent = "Sorry you can't make it — we'll catch you next time.";
+        }
+        document.body.classList.add("done");
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send RSVP";
+        alert("Something went wrong sending your RSVP. Please check your connection and try again.");
+      }
+    });
+  </script>
+</body>
+</html>
